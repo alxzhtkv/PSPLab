@@ -1,22 +1,10 @@
 import javax.swing.*;
+import java.awt.event.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import java.io.*; //импортирование пакета ввода-вывода
-import java.awt.*; //импортирование пакета awt
-import java.awt.event.*; //импортирование пакета поддержки событий
-import java.util.List;
-
-
-import java.util.*;
 public class Panel extends JFrame{
     Object box;
     JList list;
@@ -29,15 +17,9 @@ public class Panel extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 1000);
 
-        JPanel mainPanel = new JPanel();
 
-
-
-        final DefaultListModel listModel = new DefaultListModel();
-        final DefaultListModel listModel1 = new DefaultListModel();
-
-
-
+         DefaultListModel listModel = new DefaultListModel();
+         DefaultListModel listModel1 = new DefaultListModel();
 
 
         for(String string:myList){
@@ -49,14 +31,6 @@ public class Panel extends JFrame{
             listModel1.add(0,string);
         }
         list1  = new JList(listModel1);
-
-
-
-//        for(int i=0;i<myList.length; i++){
-//            list.add(";ermeqr");
-//        }
-
-
 
 
         text1 = new JTextArea();
@@ -71,16 +45,10 @@ public class Panel extends JFrame{
         JButton editButton1 = new JButton("Edit");
         JButton clearButton = new JButton("Clear");
         JButton clearButton1 = new JButton("Clear");
-
+        JDialog dialog = new JDialog();
 
 
         setLayout(null);
-
-
-//        compareButton.setLocation(200,400);
-
-        compareButton.setBounds(600,100,100,50);
-//        compareButton.addActionListener(new ButtonAdd);
 
         text1.setEditable (false);
 
@@ -88,15 +56,6 @@ public class Panel extends JFrame{
 
 //        JScrollPane scrollPane = new JScrollPane();
 //        scrollPane.getViewport().setView(list);
-
-
-//        addButton1.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                list.add("erkwjvb");
-//            }
-//        });
-
 
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -108,7 +67,6 @@ public class Panel extends JFrame{
                 list.setSelectedIndex(index);
                 list.ensureIndexIsVisible(index);
                 newRecord.setText(null);
-
 
             }
         });
@@ -134,7 +92,6 @@ public class Panel extends JFrame{
 
                 listModel.remove(list.getSelectedIndex());
 
-
             }
         });
 
@@ -143,7 +100,6 @@ public class Panel extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 listModel1.remove(list1.getSelectedIndex());
-
 
             }
         });
@@ -182,6 +138,8 @@ public class Panel extends JFrame{
                     }
 
                 }
+                dialog.add(text1);
+                dialog.setVisible(true);
 
 
             }
@@ -220,13 +178,9 @@ public class Panel extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 String element = newRecord1.getText();
-
                 int g = list1.getSelectedIndex();
-
-
                 listModel1.add(g,element);
                 listModel1.remove(g+1);
-
                 newRecord1.setText(null);
 
             }
@@ -237,13 +191,9 @@ public class Panel extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 String element = newRecord.getText();
-
                 int g = list.getSelectedIndex();
-
-
                 listModel.add(g,element);
                 listModel.remove(g+1);
-
                 newRecord.setText(null);
 
             }
@@ -251,7 +201,7 @@ public class Panel extends JFrame{
 
 
 
-
+        compareButton.setBounds(600,100,100,50);
         addButton.setBounds(10,320,100,50);
         add(addButton);
         deleteButton.setBounds(160,320,100,50);
@@ -267,7 +217,7 @@ public class Panel extends JFrame{
         list.setLocation(10,10);
         list1.setLocation(310,10);
         text1.setSize(250, 500);
-        text1.setLocation(600,155);
+//        text1.setLocation(600,155);
 
         newRecord.setSize(250,20);
         newRecord.setLocation(10,390);
@@ -281,9 +231,9 @@ public class Panel extends JFrame{
         clearButton.setBounds(10,450,250,20);
         clearButton1.setBounds(310,450,250,20);
 
+        dialog.setSize(250,400);
+        dialog.setLocation(600,200);
 
-
-        add(text1);
         add(list);
         add(list1);
         add(compareButton);
@@ -295,49 +245,6 @@ public class Panel extends JFrame{
         add(clearButton);
         add(clearButton1);
 
-
-
-
-
-
-
-        list.addMouseListener(new ButtonActionLisener());
-//        compareButton.addActionListener(new ButtonActionListener());
     }
 
-//    class ButtonAdd implements ActionListener{
-//        public void actionPerfomed(ActionEvent event){
-//            text1.add(list.getText(),2);
-//
-//        }
-//    }
-
-    public class ButtonActionLisener implements MouseListener{
-        //  Если пользователь нажал и отпустил одну из кнопок, вызывается метод mouseClicked.
-        public void mouseClicked(MouseEvent e) {
-            list =  (JList) e.getSource();
-            Object text =  list.getSelectedValue();
-            text1.setText((String)text);
-        }
-        // mouseEntered - данный метод будет вызываться системой у слушателя каждый раз, когда курсор мыши будет оказываться над компонентом.
-        public void mouseEntered(MouseEvent e) {
-            list = (JList) e.getSource();
-            text1.setText("метод mouseEntered()");
-        }
-        // mouseExited – данный метод срабатывает, когда убираем курсор мыши с компонента.
-        public void mouseExited(MouseEvent e) {
-            list = (JList) e.getSource();
-            text1.setText("метод mouseExited()");
-        }
-        // Навели на компонент, зажали кнопку — система вызвала mousePressed.
-        public void mousePressed(MouseEvent e) {
-            list = (JList) e.getSource();
-            text1.setText("метод mousePressed()");
-        }
-        // Отпускаем кнопку — система вызвала mouseReleased.
-        public void mouseReleased(MouseEvent e) {
-            list = (JList) e.getSource();
-            text1.setText("метод mouseReleased()");
-        }
-    }
 }
